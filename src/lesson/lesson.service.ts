@@ -19,6 +19,7 @@ export class LessonService {
             name,
             startDate,
             endDate,
+            students: [],
         });
 
         return this.repository.save(lesson);
@@ -33,5 +34,11 @@ export class LessonService {
 
     async readAll(): Promise<Lesson[]> {
         return this.repository.find();
+    }
+
+    async assignStudentsToLesson(lessonId: string, studentsIds: string[]) {
+        const lesson = await this.read(lessonId);
+        lesson.students = [...lesson.students, ...studentsIds];
+        return this.repository.save(lesson);
     }
 }

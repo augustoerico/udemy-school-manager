@@ -1,4 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { AssignStudentsToLessonInput } from './assign-students-to-lesson.input';
 import { CreateLessonInput } from './lesson.input';
 import { LessonService } from './lesson.service';
 import { LessonType } from './lesson.type';
@@ -22,5 +23,14 @@ export class LessonResolver {
     @Query((returns) => [LessonType])
     lessons() {
         return this.lessonService.readAll();
+    }
+
+    @Mutation((returns) => LessonType)
+    assignStudentsToLesson(
+        @Args('assignStudentToLessonInput')
+        assignStudentsToLessonInput: AssignStudentsToLessonInput,
+    ) {
+        const { lessonId, studentsIds } = assignStudentsToLessonInput;
+        return this.lessonService.assignStudentsToLesson(lessonId, studentsIds);
     }
 }
