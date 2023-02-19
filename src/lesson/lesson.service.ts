@@ -30,4 +30,8 @@ export class LessonService {
             throw new NotFoundException(`Lesson with id = ${id} not found`);
         return lesson;
     }
+
+    async readAll(): Promise<Lesson[]> {
+        return this.repository.find();
+    }
 }

@@ -18,4 +18,9 @@ export class LessonResolver {
     ) {
         return this.lessonService.create(createLessonInput);
     }
+
+    @Query((returns) => [LessonType])
+    lessons() {
+        return this.lessonService.readAll();
+    }
 }
