@@ -8,12 +8,8 @@ export class StudentResolver {
     constructor(private studentService: StudentService) {}
 
     @Query((returns) => StudentType)
-    student() {
-        return {
-            id: 'some-student-id',
-            firstName: 'Wile',
-            lastName: 'Coyote',
-        };
+    student(@Args('id') id: string) {
+        return this.studentService.read(id);
     }
 
     @Mutation((returns) => StudentType)
@@ -21,5 +17,10 @@ export class StudentResolver {
         @Args('createStudentInput') createStudentInput: CreateStudentInput,
     ) {
         return this.studentService.create(createStudentInput);
+    }
+
+    @Query((returns) => [StudentType])
+    students() {
+        return this.studentService.readAll();
     }
 }

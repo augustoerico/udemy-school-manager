@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Student } from './student.entity';
@@ -21,6 +21,19 @@ export class StudentService {
         });
 
         this.repository.save(student);
+        return student;
+    }
+
+    async readAll() {
+        return this.repository.find();
+    }
+
+    async read(id: string) {
+        const student = this.repository.findOne({ id });
+        if (!student)
+            throw new NotFoundException(
+                `Student with id = ${id} was not found`,
+            );
         return student;
     }
 }
