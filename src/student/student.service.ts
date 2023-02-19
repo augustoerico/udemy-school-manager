@@ -36,4 +36,14 @@ export class StudentService {
             );
         return student;
     }
+
+    async readMany(studentIds: string[]) {
+        return this.repository.find({
+            where: {
+                id: {
+                    $in: studentIds,
+                },
+            },
+        });
+    }
 }

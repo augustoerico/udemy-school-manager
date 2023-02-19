@@ -13,13 +13,13 @@ export class LessonService {
     ) {}
 
     async create(createLessonInput: CreateLessonInput): Promise<Lesson> {
-        const { name, startDate, endDate } = createLessonInput;
+        const { name, startDate, endDate, students } = createLessonInput;
         const lesson = this.repository.create({
             id: uuid(),
             name,
             startDate,
             endDate,
-            students: [],
+            students,
         });
 
         return this.repository.save(lesson);
